@@ -15,7 +15,7 @@ const locationTempate = document.querySelector('#location-template').innerHTML
 const sidebarTemplate = document.querySelector('#sidebar-template').innerHTML
 
 // room 
-const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
+const { username, room, avaliableRoom } = Qs.parse(location.search, { ignoreQueryPrefix: true })
 
 // auto scroll function
 const autoscroll = () => {
@@ -114,9 +114,21 @@ socket.on('roomData', ({ room, users }) => {
     document.querySelector('#sidebar').innerHTML = html
 })
 
-socket.emit('join', { username, room }, (error) => {
+if (!avaliableRoom) {
+    socket.emit('join', { username, room }, (error) => {
     if (error) {
         alert(error)
         location.href = '/'
     }
 })
+} else if (!room) {
+     socket.emit('join', { username, room: avaliableRoom }, (error) => {
+        if (error) {
+            alert(error)
+            location.href = '/'
+        }
+    }) 
+} else {
+    alert('Please Choose one room avaliable or write one ')
+    location.href = '/'
+}

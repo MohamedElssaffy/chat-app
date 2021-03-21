@@ -4,7 +4,7 @@ const express = require('express')
 const socketio = require('socket.io')
 const Filter = require('bad-words')
 const { generateMesssage, generateLocationMessage } = require('./utils/messages')
-const { getUser, addUser, removeUser, getUsersInRoom } = require('./utils/users')
+const { getUser, addUser, removeUser, getUsersInRoom, getRoomsName } = require('./utils/users')
 
 
 
@@ -28,6 +28,8 @@ app.get('', async (req, res) => {
 
 
 io.on('connection', (socket) => {
+    const roomsname = getRoomsName()
+    socket.emit('avaliableRooms', roomsname)
 
     socket.on('join', (option, callback) => {
 
@@ -38,6 +40,8 @@ io.on('connection', (socket) => {
         }
 
         socket.join(user.room)
+
+        io.emit('avaliableRoom', user.room)
 
         socket.emit('message', generateMesssage('Admin', 'Hello In Our WebSite'))
         socket.broadcast.to(user.room).emit('message', generateMesssage( 'Admin', `${user.username} is joined!`))

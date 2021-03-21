@@ -1,5 +1,7 @@
 const users = []
 
+const avaliableRoom = []
+
 const addUser = ({ id, username, room }) => {
 
     username = username.trim().toLowerCase()
@@ -23,9 +25,15 @@ const addUser = ({ id, username, room }) => {
         room
     }
 
+    const roomname = { room }
+    const repeatedRoom = avaliableRoom.find((roomname) => roomname.room === room)
+    if (!repeatedRoom) {
+        avaliableRoom.push(roomname)
+    }
+
     users.push(user)
 
-    return { user }
+    return { user, roomname }
 
 }
 
@@ -40,18 +48,26 @@ const getUser = (id) => {
     return user
 }
 
-getUsersInRoom = (room) => {
+const getUsersInRoom = (room) => {
     const usersInRoom = users.filter((user) => user.room === room)
     if (usersInRoom) {
         return usersInRoom
     }
 }
 
+const getRoomsName = () => {
+    if (avaliableRoom.length === 0) {
+        return roomname = null
+    }
+    return avaliableRoom
+}
+
 module.exports = {
     addUser,
     removeUser,
     getUser,
-    getUsersInRoom
+    getUsersInRoom,
+    getRoomsName
 }
 
 

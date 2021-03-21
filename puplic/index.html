@@ -16,10 +16,27 @@
                 <label>Your Name</label>
                 <input type="text" name="username" placeholder="Write Your Name" required>
                 <label>Room Name</label>
-                <input type="text" name="room" placeholder="Write Room Name" required>
+                <input type="text" name="room" placeholder="Write Room Name">
+                <select id="avaliableRoom" name="avaliableRoom" hidden>
+                    <option selected></option>
+                </select>
                 <button>Join</button>
             </form>
         </div>
     </div>
+
+    <script id="avaliable-room" type="text/html">
+            <option value={{roomname}}>{{roomname}}</option>
+    </script>
+    <script id="avaliable-rooms" type="text/html">
+        <option selected></option>
+        {{#roomsname}}
+        <option value={{room}}>{{room}}</option>
+        {{/roomsname}}
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/join.js"></script>
 </body>
 </html>
