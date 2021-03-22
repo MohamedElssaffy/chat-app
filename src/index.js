@@ -72,7 +72,9 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
         const user = removeUser(socket.id)
+        const avaliableRoom = getRoomsName()
         if (user) {
+            io.emit('avaliableRooms', avaliableRoom)
             io.to(user.room).emit('message', generateMesssage('Admin', `${user.username} has left`))
             io.to(user.room).emit('roomData', {
                 room: user.room,

@@ -16,6 +16,9 @@ socket.on('avaliableRooms', (roomsname) => {
         $select.removeAttribute('hidden')
         const html = Mustache.render(roomsTamplate, { roomsname })
         $select.innerHTML = html
+    } else {
+        $select.setAttribute('hidden', 'hidden')
+        Selection.innerHTML = ''
     }
 })
 

@@ -1,6 +1,6 @@
 const users = []
 
-const avaliableRoom = []
+let avaliableRoom = []
 
 const addUser = ({ id, username, room }) => {
 
@@ -40,7 +40,13 @@ const addUser = ({ id, username, room }) => {
 const removeUser = (id) => {
     const index = users.findIndex((user) => user.id === id)
     if (index !== -1) {
-        return users.splice(index, 1)[0]
+        const room = users[index].room
+        const user = users.splice(index, 1)[0]
+        const existedRoom = getUsersInRoom(room)
+        if (existedRoom.length ===0) {
+            avaliableRoom = avaliableRoom.filter((roomname) => roomname.room !== room)   
+        }
+        return user
     }
 }
 const getUser = (id) => {
